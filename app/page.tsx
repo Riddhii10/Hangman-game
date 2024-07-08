@@ -86,16 +86,16 @@ export default function Home() {
     <div className="flex h-screen bg-[#070F2B] text-[#ffffff]">
       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <NewWord newWord={newWord} />
-        {/* <div className="mt-auto text-sm text-white">{wordData.hint}</div> */}
       </div>
-      <div className="flex flex-col items-center justify-center w-4/6">
+      {/* <div className="flex flex-col items-center justify-center w-4/6"> */}
+      <div className="flex flex-col items-center w-4/6">    
         <Title />
-        <div className="flex justify-center space-x-4">
+        <div className="flex mt-8 justify-center space-x-4 mb-8">
           <Hangman word={wordData.word} wrong={wrong} gameOver={gameOver} lostSize={lostSize} />
         </div>
         <Word word={wordData.word} correct={correct} gameOver={gameOver} />
         <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
-        <div className="mt-8 text-sm text-white">Hint : {wordData.hint}</div>
+        <div className="mt-10 text-md text-[#9290C3]">Hint : {wordData.hint}</div>
       </div>
       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />

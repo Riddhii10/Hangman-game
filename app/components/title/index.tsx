@@ -9,7 +9,7 @@ import React from 'react';
 
 const Title = () => {
   return (
-    <h1 className="mt-8 text-5xl font-extrabold text-white">Hangman</h1>
+    <h1 className="mt-8 text-5xl font-extrabold text-[#9290C3]">Hangman</h1>
   );
 };
 

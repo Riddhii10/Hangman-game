@@ -87,6 +87,7 @@ export default function Home() {
       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <NewWord newWord={newWord} />
       </div>
+
       {/* <div className="flex flex-col items-center justify-center w-4/6"> */}
       <div className="flex flex-col items-center w-4/6">    
         <Title />
@@ -97,6 +98,7 @@ export default function Home() {
         <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
         <div className="mt-10 text-md text-[#9290C3]">Hint : {wordData.hint}</div>
       </div>
+      
       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />
       </div>

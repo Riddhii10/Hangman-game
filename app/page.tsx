@@ -1,3 +1,112 @@
+'use client'
+
+import { useState, useEffect, useCallback } from 'react';
+import Hangman from './components/hangman';
+import Title from './components/title';
+import Word from './components/word';
+import Guesses from './components/guesses';
+import NewWord from './components/newWord';
+import Status from './components/status';
+import { chooseRandomWord, words } from './data/words';
+import { EDifficulty } from './data/difficulty';
+
+export default function Home() {
+  const [wordData, setWordData] = useState(chooseRandomWord());
+  const [lostSize, setLostSize] = useState(EDifficulty.EASY);
+  const [wrong, setWrong] = useState(new Set<string>());
+  const [letters, setLetters] = useState(new Set<string>(wordData.word.split('')));
+  const [correct, setCorrect] = useState(new Set<string>());
+  const [gameOver, setGameOver] = useState(false);
+  const [wins, setWins] = useState(0);
+  const [losses, setLosses] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const newWord = useCallback((difficulty: EDifficulty = EDifficulty.EASY) => {
+    const newWordData = chooseRandomWord();
+    setWordData(newWordData);
+    setLostSize(difficulty);
+    setWrong(new Set<string>());
+    setCorrect(new Set<string>());
+    setLetters(new Set<string>(newWordData.word.split('')));
+    setGameOver(false);
+  }, []);
+
+  const selectLetter = useCallback((letter: string) => {
+    if (letters.has(letter)) {
+      setCorrect(new Set(correct).add(letter));
+      if (correct.size + 1 >= letters.size) {
+        setGameOver(true);
+        setWins(wins + 1);
+      }
+    } else {
+      setWrong(new Set(wrong).add(letter));
+      if (wrong.size + 1 >= lostSize) {
+        setGameOver(true);
+        setLosses(losses + 1);
+      }
+    }
+  }, [letters, correct, wrong, lostSize, wins, losses]);
+
+  const handleKeyPress = useCallback((event: any) => {
+    if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+      selectLetter(event.key.toLowerCase());
+    }
+  }, [selectLetter]);
+
+  const handleKeyPressUp = useCallback((event: any) => {
+    if (event.key === "Enter") {
+      newWord(lostSize);
+    } else if (event.key === "1") {
+      newWord(EDifficulty.EASY);
+    } else if (event.key === "2") {
+      newWord(EDifficulty.MEDIUM);
+    } else if (event.key === "3") {
+      newWord(EDifficulty.HARD);
+    } else if (event.key === "4") {
+      newWord(EDifficulty.EXTREME);
+    }
+  }, [newWord, lostSize]);
+
+  useEffect(() => {
+    document.addEventListener("keyup", handleKeyPress);
+    document.addEventListener("keyup", handleKeyPressUp);
+
+    return () => {
+      document.removeEventListener("keyup", handleKeyPress);
+      document.removeEventListener("keyup", handleKeyPressUp);
+    };
+  }, [handleKeyPress, handleKeyPressUp]);
+
+  return (
+    hydrated ?
+    <div className="flex h-screen bg-[#070F2B] text-[#ffffff]">
+      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
+        <NewWord newWord={newWord} />
+        {/* <div className="mt-auto text-sm text-white">{wordData.hint}</div> */}
+      </div>
+      <div className="flex flex-col items-center justify-center w-4/6">
+        <Title />
+        <div className="flex justify-center space-x-4">
+          <Hangman word={wordData.word} wrong={wrong} gameOver={gameOver} lostSize={lostSize} />
+        </div>
+        <Word word={wordData.word} correct={correct} gameOver={gameOver} />
+        <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
+        <div className="mt-8 text-sm text-white">Hint : {wordData.hint}</div>
+      </div>
+      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
+        <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />
+      </div>
+    </div> : <div>Loading...</div>
+  );
+}
+
+
+
+
 // 'use client';
 // import { useState, useEffect, useCallback } from 'react';
 // import Hangman from './components/hangman';
@@ -101,106 +210,106 @@
 //   );
 // }
 
-'use client';
-import { useState, useEffect, useCallback } from 'react';
-import Hangman from './components/hangman';
-import Title from './components/title';
-import Word from './components/word';
-import Guesses from './components/guesses';
-import NewWord from './components/newWord';
-import Status from './components/status';
-import { chooseRandomWord } from './data/words';
-import { EDifficulty } from './data/difficulty';
+// 'use client';
+// import { useState, useEffect, useCallback } from 'react';
+// import Hangman from './components/hangman';
+// import Title from './components/title';
+// import Word from './components/word';
+// import Guesses from './components/guesses';
+// import NewWord from './components/newWord';
+// import Status from './components/status';
+// import { chooseRandomWord } from './data/words';
+// import { EDifficulty } from './data/difficulty';
 
-export default function Home() {
-  const [word, setWord] = useState(chooseRandomWord());
-  const [lostSize, setLostSize] = useState(EDifficulty.EASY);
-  const [wrong, setWrong] = useState(new Set<string>());
-  const [letters, setLetters] = useState(new Set<string>(word.split('')));
-  const [correct, setCorrect] = useState(new Set<string>());
-  const [gameOver, setGameOver] = useState(false);
-  const [wins, setWins] = useState(0);
-  const [losses, setLosses] = useState(0);
-  const [hydrated, setHydrated] = useState(false);
+// export default function Home() {
+//   const [word, setWord] = useState(chooseRandomWord());
+//   const [lostSize, setLostSize] = useState(EDifficulty.EASY);
+//   const [wrong, setWrong] = useState(new Set<string>());
+//   const [letters, setLetters] = useState(new Set<string>(word.split('')));
+//   const [correct, setCorrect] = useState(new Set<string>());
+//   const [gameOver, setGameOver] = useState(false);
+//   const [wins, setWins] = useState(0);
+//   const [losses, setLosses] = useState(0);
+//   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(()=>{
-    setHydrated(true)
-  }, [])
+//   useEffect(()=>{
+//     setHydrated(true)
+//   }, [])
 
-  const newWord = useCallback((difficulty: EDifficulty = EDifficulty.EASY) => {
-    const word = chooseRandomWord();
-    setWord(word);
-    setLostSize(difficulty);
-    setWrong(new Set<string>());
-    setCorrect(new Set<string>());
-    setLetters(new Set<string>(word.split('')));
-    setGameOver(false);
-  }, []);
+//   const newWord = useCallback((difficulty: EDifficulty = EDifficulty.EASY) => {
+//     const word = chooseRandomWord();
+//     setWord(word);
+//     setLostSize(difficulty);
+//     setWrong(new Set<string>());
+//     setCorrect(new Set<string>());
+//     setLetters(new Set<string>(word.split('')));
+//     setGameOver(false);
+//   }, []);
 
-  const selectLetter = useCallback((letter: string) => {
-    if (letters.has(letter)) {
-      setCorrect(new Set(correct).add(letter));
-      if (correct.size + 1 >= letters.size) {
-        setGameOver(true);
-        setWins(wins + 1);
-      }
-    } else {
-      setWrong(new Set(wrong).add(letter));
-      if (wrong.size + 1 >= lostSize) {
-        setGameOver(true);
-        setLosses(losses + 1);
-      }
-    }
-  }, [letters, correct, wrong, lostSize, wins, losses]);
+//   const selectLetter = useCallback((letter: string) => {
+//     if (letters.has(letter)) {
+//       setCorrect(new Set(correct).add(letter));
+//       if (correct.size + 1 >= letters.size) {
+//         setGameOver(true);
+//         setWins(wins + 1);
+//       }
+//     } else {
+//       setWrong(new Set(wrong).add(letter));
+//       if (wrong.size + 1 >= lostSize) {
+//         setGameOver(true);
+//         setLosses(losses + 1);
+//       }
+//     }
+//   }, [letters, correct, wrong, lostSize, wins, losses]);
 
-  const handleKeyPress = useCallback((event: any) => {
-    if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
-      selectLetter(event.key.toLowerCase());
-    }
-  }, [selectLetter]);
+//   const handleKeyPress = useCallback((event: any) => {
+//     if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+//       selectLetter(event.key.toLowerCase());
+//     }
+//   }, [selectLetter]);
 
-  const handleKeyPressUp = useCallback((event: any) => {
-    if (event.key === "Enter") {
-      newWord(lostSize);
-    } else if (event.key === "1") {
-      newWord(EDifficulty.EASY);
-    } else if (event.key === "2") {
-      newWord(EDifficulty.MEDIUM);
-    } else if (event.key === "3") {
-      newWord(EDifficulty.HARD);
-    } else if (event.key === "4") {
-      newWord(EDifficulty.EXTREME);
-    }
-  }, [newWord, lostSize]);
+//   const handleKeyPressUp = useCallback((event: any) => {
+//     if (event.key === "Enter") {
+//       newWord(lostSize);
+//     } else if (event.key === "1") {
+//       newWord(EDifficulty.EASY);
+//     } else if (event.key === "2") {
+//       newWord(EDifficulty.MEDIUM);
+//     } else if (event.key === "3") {
+//       newWord(EDifficulty.HARD);
+//     } else if (event.key === "4") {
+//       newWord(EDifficulty.EXTREME);
+//     }
+//   }, [newWord, lostSize]);
 
-  useEffect(() => {
-    // attach the event listener
-    document.addEventListener("keyup", handleKeyPress);
-    document.addEventListener("keyup", handleKeyPressUp);
+//   useEffect(() => {
+//     // attach the event listener
+//     document.addEventListener("keyup", handleKeyPress);
+//     document.addEventListener("keyup", handleKeyPressUp);
 
-    // remove the event listener
-    return () => {
-      document.removeEventListener("keyup", handleKeyPress);
-      document.removeEventListener("keyup", handleKeyPressUp);
-    };
-  }, [handleKeyPress, handleKeyPressUp]);
+//     // remove the event listener
+//     return () => {
+//       document.removeEventListener("keyup", handleKeyPress);
+//       document.removeEventListener("keyup", handleKeyPressUp);
+//     };
+//   }, [handleKeyPress, handleKeyPressUp]);
 
-  return ( hydrated ?
-    <div className="flex h-screen bg-[#070F2B] text-[#ffffff]">
-      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
-        <NewWord newWord={newWord} />
-      </div>
-      <div className="flex flex-col items-center justify-center w-4/6">
-        <Title />
-        <div className="flex justify-center space-x-4">
-          <Hangman word={word} wrong={wrong} gameOver={gameOver} lostSize={lostSize} />
-        </div>
-        <Word word={word} correct={correct} gameOver={gameOver} />
-        <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
-      </div>
-      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
-        <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />
-      </div>
-    </div> : <div>Loading...</div>
-  );
-}
+//   return ( hydrated ?
+//     <div className="flex h-screen bg-[#070F2B] text-[#ffffff]">
+//       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
+//         <NewWord newWord={newWord} />
+//       </div>
+//       <div className="flex flex-col items-center justify-center w-4/6">
+//         <Title />
+//         <div className="flex justify-center space-x-4">
+//           <Hangman word={word} wrong={wrong} gameOver={gameOver} lostSize={lostSize} />
+//         </div>
+//         <Word word={word} correct={correct} gameOver={gameOver} />
+//         <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
+//       </div>
+//       <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
+//         <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />
+//       </div>
+//     </div> : <div>Loading...</div>
+//   );
+// }

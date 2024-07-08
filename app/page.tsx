@@ -187,7 +187,7 @@ export default function Home() {
 
   return ( hydrated ?
     <div className="flex h-screen bg-[#070F2B] text-[#ffffff]">
-      <div className="flex flex-col w-1/6 bg-[#0b3d3a] p-4">
+      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <NewWord newWord={newWord} />
       </div>
       <div className="flex flex-col items-center justify-center w-4/6">
@@ -198,7 +198,7 @@ export default function Home() {
         <Word word={word} correct={correct} gameOver={gameOver} />
         <Guesses wrong={wrong} correct={correct} select={selectLetter} gameOver={gameOver} />
       </div>
-      <div className="flex flex-col w-1/6 bg-[#0b3d3a] p-4">
+      <div className="flex flex-col w-1/6 bg-[#5c60a8] p-4">
         <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} losses={losses} wins={wins} />
       </div>
     </div> : <div>Loading...</div>

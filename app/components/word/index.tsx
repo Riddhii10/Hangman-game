@@ -10,9 +10,9 @@ function Letter({
     gameOver: boolean,
   }) {
     const baseClassNames = "text-2xl";
-    const correctClassNames = "bg-[#0b3d3a] text-[#ffffff]";
-    const incorrectClassNames = "bg-[#0b3d3a] text-[red] underline";
-    const unselectedClassNames = "bg-[#0b3d3a] text-[#ffffff]";
+    const correctClassNames = "bg-[] text-[#ffffff]";
+    const incorrectClassNames = "bg-[] text-[red] underline";
+    const unselectedClassNames = "bg-[] text-[#ffffff]";
     const selectedClassNames = correct.has(letter) ? correctClassNames : gameOver ? incorrectClassNames : unselectedClassNames;
     const classNames = `${baseClassNames} ${selectedClassNames}`;
     return (

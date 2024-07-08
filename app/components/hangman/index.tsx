@@ -25,7 +25,7 @@ export default function Hangman({
     }
     const drawHangman = () => {
       const bodyParts = [
-        <circle key={5} cx="90" cy="21" r="10" stroke="white" fill="white" />,
+        <circle key={5} cx="90" cy="21" r="10" stroke="white" fill="white" opacity={0.9} />,
         <line key={6} x1="90" y1="31" x2="90" y2="61" stroke="white" />,
         <line key={3} x1="90" y1="41" x2="80" y2="51" stroke="white" />,
         <line key={4} x1="90" y1="41" x2="100" y2="51" stroke="white" />,

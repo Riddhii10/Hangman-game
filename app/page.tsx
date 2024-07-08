@@ -85,7 +85,7 @@ export default function Home() {
   }, [handleKeyPress, handleKeyPressUp]);
 
   return ( hydrated ?
-    <div className="flex flex-col items-center justify-center h-screen w-full bg-[#0b3d3a] text-[#ffffff] text-4xl font-bold">
+    <div className="flex flex-col items-center justify-center h-screen w-full bg-[#070F2B] text-[#ffffff] text-4xl font-bold">
       <Title />
       <div className="flex justify-center space-x-4">
         <Hangman word={word} wrong={wrong} gameOver={gameOver} lostSize={lostSize} />
@@ -97,6 +97,6 @@ export default function Home() {
       <NewWord newWord={newWord} />
       <Status wrong={wrong} correct={correct} lostSize={lostSize} gameOver={gameOver} wins={wins} losses={losses} />
     </div>
-  : <div className="flex flex-col items-center justify-center h-screen w-full bg-[#0b3d3a] text-[#ffffff] text-4xl font-bold">Loading...</div>
+  : <div className="flex flex-col items-center justify-center h-screen w-full bg-[#070F2B] text-[#ffffff] text-4xl font-bold">Loading...</div>
   );
 }

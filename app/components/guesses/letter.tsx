@@ -11,14 +11,13 @@ export default function Letter({
     letter: string,
     gameOver: boolean,
   }) {
-    const basicClasses = 'text-xl h-14 w-12 mx-1 my-1 font-bold border-2 border-[#ffffff] rounded-md p-2';
-    const correctLetterClasses = 'bg-[#37f664] text-[#0b3d3a]';
-    const incorrectLetterClasses = 'bg-[red] text-[#ffffff]';
-    const gameOverUnselectedLetterClasses = 'bg-[#0b3d3a] text-[#ffffff] cursor-default'; 
-    const unselectedLetterClasses = 'bg-[#0b3d3a] text-[#ffffff] hover:bg-[#eeeeee] hover:text-[#0b3d3a] transition-colors duration-300 ease-in-out';
+    const basicClasses = 'text-base h-10 w-8 mx-1 my-1 font-semibold border-[#ffffff] border-2 rounded-md ';
+    const correctLetterClasses = 'bg-[#50AA30] text-[#0b3d3a]';
+    const incorrectLetterClasses = 'bg-[#F26B6B] text-[#8B0000]';
+    const gameOverUnselectedLetterClasses = 'bg-[#8C8C8C] text-[#ffffff] cursor-default'; 
+    const unselectedLetterClasses = 'bg-[#8C8C8C] text-[#ffffff] hover:bg-[#eeeeee] hover:text-[#0b3d3a] transition-colors duration-300 ease-in-out';
     const selectedLetterClasses = wrong ? incorrectLetterClasses : correctLetterClasses;
     const classes = `${basicClasses} ${chosen ? selectedLetterClasses : gameOver ? gameOverUnselectedLetterClasses : unselectedLetterClasses}`;
-    // use tailwind to color and decorate both chosen and unchosen letters as if they are keyboard keys
     return (
       <button
         className={classes}

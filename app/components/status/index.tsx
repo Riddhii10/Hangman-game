@@ -1,148 +1,107 @@
 // export default function Status({
-//     wrong,
-//     correct,
-//     lostSize,
-//     gameOver,
-//     losses,
-//     wins,
-//   } : {
-//     wrong: Set<string>,
-//     correct: Set<string>,
-//     lostSize: number,
-//     gameOver: boolean,
-//     losses: number,
-//     wins: number,
-//   }) {
-//     const difficultyToString = (difficulty: number) => {
-//       switch (difficulty) {
-//         case 12: return "Easy";
-//         case 9: return "Medium";
-//         case 6: return "Hard";
-//         case 3: return "Extreme";
-//         default: return "Unknown";
-//       }
-//     }
-//     const status = gameOver ? (wrong.size >= lostSize ? "You lost!" : "You won!") : "Keep guessing!";
-//     return (
-//       <div className="flex flex-col my-4">
-//         <div className="text-4xl font-bold text-center">{status}</div>
-//         <div className="text-sm my-2 text-center">
-//           {`Wrong guesses: ${wrong.size}/${lostSize} | Correct guesses: ${correct.size} | Difficulty: ${difficultyToString(lostSize)}`}
-//         </div>
-//         <div className="text-sm my-2 text-center">
-//           {`Wins: ${wins} | Losses: ${losses} | Games: ${wins + losses} | Win rate: ${wins + losses > 0 ? Math.floor(wins / (wins + losses) * 100) : 0}%`}
-//         </div>
-//       </div>
-//     );
-//   }
-  
-// components/status/index.tsx
-
-// export default function Status({
 //   wrong,
 //   correct,
-//   lostSize,
 //   gameOver,
 //   losses,
 //   wins,
 // }: {
 //   wrong: Set<string>,
 //   correct: Set<string>,
-//   lostSize: number,
 //   gameOver: boolean,
 //   losses: number,
 //   wins: number,
+//   lostSize:number
 // }) {
-//   const difficultyToString = (difficulty: number) => {
-//       switch (difficulty) {
-//           case 12: return "Easy";
-//           case 9: return "Medium";
-//           case 6: return "Hard";
-//           case 3: return "Extreme";
-//           default: return "Unknown";
+//   const lostSize = 6; // Fixed to 6 guesses
+
+//   let statusColor = "bg-yellow-500"; // Default color for "Keep guessing!"
+//   let statusMessage = "Keep guessing!";
+
+//   if (gameOver) {
+//       if (wrong.size >= lostSize) {
+//           statusColor = "bg-red-500"; // Color for "You lost!"
+//           statusMessage = "You lost!";
+//       } else {
+//           statusColor = "bg-green-500"; // Color for "You won!"
+//           statusMessage = "You won!";
 //       }
 //   }
 
-//   const status = gameOver ? (wrong.size >= lostSize ? "You lost!" : "You won!") : "Keep guessing!";
-
 //   return (
-//       <div className="mt-20 p-4 rounded-lg shadow-lg text-white">
-//           <div className=" bg-green-500 text-3xl font-bold mb-4 p-6 rounded-full">{status}</div>
-//           <div className="text-lg mt-10">
+//       <div className={`mt-20 p-4 rounded-lg shadow-lg text-white`}>
+//           <div className={`text-3xl font-bold mb-4 p-6 rounded-full ${statusColor}`}>{statusMessage}</div>
+//           {/* <div className="text-lg mt-10">
 //               <p>Wrong guesses: {wrong.size}/{lostSize}</p>
 //               <p>Correct guesses: {correct.size}</p>
-//               <p>Difficulty: {difficultyToString(lostSize)}</p>
-//           </div>
+//           </div> */}
 //           <div className="text-lg mt-2">
 //               <p>Wins: {wins}</p>
 //               <p>Losses: {losses}</p>
 //               <p>Games: {wins + losses}</p>
-//               <p>Win rate: {wins + losses > 0 ? Math.floor(wins / (wins + losses) * 100) : 0}%</p>
+//               {/* <p>Win rate: {wins + losses > 0 ? Math.floor((wins / (wins + losses)) * 100) : 0}%</p> */}
 //           </div>
 //       </div>
 //   );
 // }
 
 
-// components/status/index.tsx
+
 
 export default function Status({
-  wrong,
-  correct,
-  lostSize,
-  gameOver,
-  losses,
-  wins,
-}: {
-  wrong: Set<string>,
-  correct: Set<string>,
-  lostSize: number,
-  gameOver: boolean,
-  losses: number,
-  wins: number,
-}) {
-  const difficultyToString = (difficulty: number) => {
-    switch (difficulty) {
-      case 12:
-        return "Easy";
-      case 9:
-        return "Medium";
-      case 6:
-        return "Hard";
-      case 3:
-        return "Extreme";
-      default:
-        return "Unknown";
+    wrong,
+    correct,
+    gameOver,
+    losses,
+    wins,
+    newWord,
+  }: {
+    wrong: Set<string>;
+    correct: Set<string>;
+    gameOver: boolean;
+    losses: number;
+    wins: number;
+    newWord:()=>void
+  }) {
+    const lostSize = 6; // Fixed to 6 guesses
+  
+    let statusColor = "bg-yellow-500"; // Default color for "Keep guessing!"
+    let statusMessage = "Keep guessing!";
+  
+    if (gameOver) {
+      if (wrong.size >= lostSize) {
+        statusColor = "bg-red-500"; // Color for "You lost!"
+        statusMessage = "You lost!";
+      } else {
+        statusColor = "bg-green-500"; // Color for "You won!"
+        statusMessage = "You won!";
+      }
     }
-  };
-
-  let statusColor = "bg-yellow-500"; // Default color for "Keep guessing!"
-  let statusMessage = "Keep guessing!";
-
-  if (gameOver) {
-    if (wrong.size >= lostSize) {
-      statusColor = "bg-red-500"; // Color for "You lost!"
-      statusMessage = "You lost!";
-    } else {
-      statusColor = "bg-green-500"; // Color for "You won!"
-      statusMessage = "You won!";
-    }
+  
+    return (
+      <div className="rounded-lg shadow-lg text-white bg-opacity-100 h-4/5 w-3/5 bg-[#676767]">
+        <div className={`text-3xl font-bold mb-6 rounded-full mt-28 ${statusColor} w-2/6 text-center h-1/6 mx-auto items-center flex justify-center`}>
+            
+          {statusMessage}
+        </div>
+        <div className="text-lg mt-2 flex justify-center flex-col items-center gap-3">
+          {/* <p>Wins: {wins}</p>
+          <p>Losses: {losses}</p>
+          <p>Games: {wins + losses}</p> */}
+          <div>Wins: {wins}</div>
+          <div>Losses: {losses}</div>
+          <div>Games: {wins + losses}</div>
+        </div>
+        {gameOver && (
+        <div className="mt-6 flex justify-center">
+          <button
+            className="w-28 h-12 text-base font-semibold border-2 border-[#ffffff] bg-[#8c8c8c] text-[#ffffff] hover:bg-[#676767] hover:text-black transition-colors duration-300 ease-in-out shadow-lg"
+            onClick={newWord}
+          >
+            Play Again
+          </button>
+        </div>
+      )}
+      </div>
+    );
   }
-
-  return (
-    <div className={`mt-20 p-4 rounded-lg shadow-lg text-white `}>
-      <div className={`text-3xl font-bold mb-4 p-6 rounded-full ${statusColor}`}>{statusMessage}</div>
-      <div className="text-lg mt-10">
-        <p>Wrong guesses: {wrong.size}/{lostSize}</p>
-        <p>Correct guesses: {correct.size}</p>
-        <p>Difficulty: {difficultyToString(lostSize)}</p>
-      </div>
-      <div className="text-lg mt-2">
-        <p>Wins: {wins}</p>
-        <p>Losses: {losses}</p>
-        <p>Games: {wins + losses}</p>
-        <p>Win rate: {wins + losses > 0 ? Math.floor((wins / (wins + losses)) * 100) : 0}%</p>
-      </div>
-    </div>
-  );
-}
+  

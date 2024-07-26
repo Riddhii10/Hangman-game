@@ -33,7 +33,7 @@ function Letter({
   }) {
     const letters = word.split('');
     return (
-      <section className="flex justify-around space-x-4 my-4">
+      <section className="flex justify-around space-x-4 my-4 ml-16">
         {letters.length > 0 ? letters.map((letter, index) => 
           <Letter key={index} correct={correct} letters={new Set(letters)} letter={letter} gameOver={gameOver} />
         ) : <div className="text-2xl">_</div>}

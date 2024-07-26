@@ -35,23 +35,9 @@ export default function Hangman({
       gameOver && wrong.size >= lostSize;
 
   return (
-    //   <div className="flex justify-center my-4">
-    //       <svg className="h-48 w-48" viewBox="0 0 90 121">
-    //         {/* vertical wala  */}
-    //           <line x1="30" y1="1" x2="30" y2="121" stroke="#814141" strokeWidth="2" />
-    //         {/* niche wala */}
-    //           <line x1="0" y1="121" x2="60" y2="121" stroke="#814141" strokeWidth="6" />
-    //         {/* ekdum upar wala */}
-    //           <line x1="30" y1="1" x2="90" y2="1" stroke="#814141" strokeWidth="2" />
-    //         {/* head wala */}
-    //           <line x1="90" y1="1" x2="90" y2="11" stroke="#814141" strokeWidth="2" />
-    //           {drawHangman()}
-    //           {ifGameOver() && drawGameOver()}
-    //       </svg>
-    //   </div>
-
     <div className="flex justify-center my-4">
-  <svg className="h-48 w-48" viewBox="0 0 90 121">
+      <div className="relative">
+      <svg className="h-48 w-48" viewBox="0 0 90 121">
     {/* vertical line */}
     <line x1="30" y1="0" x2="30" y2="121" stroke="#814141" strokeWidth="2" />
     {/* bottom line */}
@@ -63,6 +49,8 @@ export default function Hangman({
     {drawHangman()}
     {ifGameOver() && drawGameOver()}
   </svg>
+      </div>
+  
 </div>
 
 

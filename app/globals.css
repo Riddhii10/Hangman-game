@@ -30,4 +30,9 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  /* Add this CSS to your global styles or component styles */
+svg {
+  overflow: visible;
+}
+
 }

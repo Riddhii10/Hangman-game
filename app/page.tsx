@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Hangman from "./components/hangman";
@@ -19,26 +18,25 @@ export default function Home() {
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
   const [hydrated, setHydrated] = useState(false);
-  const [newWordCount, setNewWordCount] = useState(0); // Track new word button clicks
+  const [newWordCount, setNewWordCount] = useState(0);  
 
   useEffect(() => {
     setHydrated(true);
   }, []);
 
-  // Function to handle a new word
   const newWord = useCallback(() => {
-    if (newWordCount < 3) { // Check if new word button can be clicked less than 3 times
+    if (newWordCount < 3) { 
       const newWordData = chooseRandomWord();
       setWordData(newWordData);
       setWrong(new Set<string>());
       setCorrect(new Set<string>());
       setLetters(new Set<string>(newWordData.word.split("")));
       setGameOver(false);
-      setNewWordCount(prevCount => prevCount + 1); // Update the count correctly
+      setNewWordCount(prevCount => prevCount + 1); 
     }
   }, [newWordCount]);
 
-  // Function to reset the game state
+  
   const startNewGame = useCallback(() => {
     const newWordData = chooseRandomWord();
     setWordData(newWordData);
@@ -46,7 +44,7 @@ export default function Home() {
     setCorrect(new Set<string>());
     setLetters(new Set<string>(newWordData.word.split("")));
     setGameOver(false);
-    setNewWordCount(0); // Reset new word count for the new game
+    setNewWordCount(0); 
   }, []);
 
   const selectLetter = useCallback(
@@ -128,19 +126,19 @@ export default function Home() {
           <Hint hint={wordData.hint} />{" "}
         </div>
         <div className="">
-          <NewWord newWord={newWord} newWordCount={newWordCount} /> {/* Pass newWordCount to NewWord component */}
+          <NewWord newWord={newWord} newWordCount={newWordCount} /> 
         </div>
       </div>
 
       {gameOver && (
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center ">
+        <div className="absolute top-0 left-0 w-full h-full  bg-opacity-50 bg-gray flex justify-center ">
           <Status
             wrong={wrong}
             correct={correct}
             gameOver={gameOver}
             losses={losses}
             wins={wins}
-            newWord={startNewGame} // Pass startNewGame to Status component
+            newWord={startNewGame} 
           />
         </div>
       )}
